@@ -3,6 +3,7 @@ package com.example.jfk.myapplication;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.CheckBox;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -27,6 +28,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JFK on 5/19/2015.
@@ -66,12 +68,16 @@ public class ServerRequests {
 
         @Override
         protected Void doInBackground(Void... params) {
-                ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-                dataToSend.add(new BasicNameValuePair("name", user.name));
-                dataToSend.add(new BasicNameValuePair("age", user.age + ""));
-                dataToSend.add(new BasicNameValuePair("username", user.username));
-                dataToSend.add(new BasicNameValuePair("password", user.password));
-                dataToSend.add(new BasicNameValuePair("phoneNumber", user.phoneNumber));
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("name", user.name));
+            dataToSend.add(new BasicNameValuePair("age", user.age + ""));
+            dataToSend.add(new BasicNameValuePair("username", user.username));
+            dataToSend.add(new BasicNameValuePair("password", user.password));
+            dataToSend.add(new BasicNameValuePair("phoneNumber", user.phoneNumber));
+
+            //this function adds all of the user's checkboxes to the dataToSend array to be saved.
+            addCheckBoxesToArrayList(user.medicalHistory, dataToSend);
+
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
@@ -89,6 +95,18 @@ public class ServerRequests {
             }
             return null;
         }
+
+        private void addCheckBoxesToArrayList(List<CheckBox> medicalHistory, ArrayList<NameValuePair> dataToSend) {
+            for(int i = 0; i < medicalHistory.size(); i++){
+                if(medicalHistory.get(i).isChecked()){
+                    dataToSend.add(new BasicNameValuePair("checkBox" + i, 1 +""));
+                }
+                else{
+                    dataToSend.add(new BasicNameValuePair("checkBox" + i, 0 + ""));
+                }
+            }
+        }
+
 
         @Override
         protected void onPostExecute(Void aVoid) {

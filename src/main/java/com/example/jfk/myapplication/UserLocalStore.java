@@ -22,6 +22,8 @@ public class UserLocalStore {
         spEditor.putString("password", _user.password);
         spEditor.putInt("age", _user.age);
         spEditor.putString("phoneNumber", _user.phoneNumber);
+
+        //todo: put checkbox linked list in here
         spEditor.commit();
     }
 
@@ -33,6 +35,7 @@ public class UserLocalStore {
         String phoneNumber = userLocalDatabase.getString("phoneNumber", "");
 
         User storedUser = new User(name,username, password, phoneNumber, age);
+        //testing for changes
 
         return storedUser;
     }
@@ -45,8 +48,7 @@ public class UserLocalStore {
     }
 
     public boolean getUserLoggedIn(){
-        if(userLocalDatabase.getBoolean("loggedIn", false) == true) return true;
-        else return false;
+        return(userLocalDatabase.getBoolean("loggedIn", false));
     }
 
     public void clearUserData(){

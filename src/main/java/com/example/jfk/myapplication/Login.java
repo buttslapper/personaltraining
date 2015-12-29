@@ -53,6 +53,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 startActivity(new Intent(this, Register.class));//start new activity 'register'
         }
     }
+    //some comment
 
     private void authenticate(User user){//method to verify user
         ServerRequests serverRequests = new ServerRequests(this);//creates new ServerRequest with context 'this'
